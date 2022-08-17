@@ -15,9 +15,12 @@ uint32_t mem_fech_32(dtptr_t addr)
 }
 
 //=======================================================================================================write memory functions
-void mem_write_16(dtptr_t addr, uint8_t data)
+void mem_write_16(dtptr_t addr, uint16_t data)
 {
     *(uint16_t*)(memory + addr) = data;
 }
 
-void mem_write_32(dtptr_t addr, uint8_t data);
+void mem_write_32(dtptr_t addr, uint32_t data)
+{
+    *(uint32_t*)(memory + addr) = data;
+}
