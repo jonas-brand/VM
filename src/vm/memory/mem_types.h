@@ -9,4 +9,4 @@ typedef uint16_t dtptr_t;
 //type to store memory page address of vm
 typedef uint8_t pgptr_t;
 
-#endif __MEMORY_TYPES_H__
+#endif //! __MEMORY_TYPES_H__
