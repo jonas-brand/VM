@@ -1,9 +1,17 @@
 #include "mem_access.h"
 #include "mem_config.h"
 
+typedef struct
+{
+    bool mapped;
+    memacc_act_t on_fech;
+    memacc_act_t on_write;
+}pgconfig_t;
+
+//main memory
 static uint8_t memory[0xFFFF];
 
-//=======================================================================================================fech memory functions
+//=============================================================================================fech memory functions
 uint16_t mem_fech_16(dtptr_t addr)
 {
     return *(uint16_t*)(memory + addr);
@@ -14,7 +22,7 @@ uint32_t mem_fech_32(dtptr_t addr)
     return *(uint32_t*)(memory + addr);
 }
 
-//=======================================================================================================write memory functions
+//=============================================================================================write memory functions
 void mem_write_16(dtptr_t addr, uint16_t data)
 {
     *(uint16_t*)(memory + addr) = data;
@@ -24,3 +32,9 @@ void mem_write_32(dtptr_t addr, uint32_t data)
 {
     *(uint32_t*)(memory + addr) = data;
 }
+
+//=============================================================================================function for configuring maped memory
+void mem_map(pgptr_t page, memacc_act_t on_fech, memacc_act_t on_write);
+
+//function for loading data into memory
+bool mem_load(dtptr_t addr, size_t size, uint8_t* data);

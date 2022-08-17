@@ -2,6 +2,7 @@
 #define __MEMORY_CONFIG_H__
 
 #include "mem_types.h"
+#include "stdbool.h"
 
 //function type for actions to be taken when acessing mapped memory
 typedef void (*memacc_act_t)(uint8_t* mem, dtptr_t addr);
