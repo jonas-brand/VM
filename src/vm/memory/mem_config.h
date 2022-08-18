@@ -13,4 +13,7 @@ void mem_map(pgptr_t page, memacc_act_t on_fech, memacc_act_t on_write);
 //function for loading data into memory
 bool mem_load(dtptr_t addr, size_t size, uint8_t* data);
 
+//function for printing out memory
+bool mem_print(dtptr_t addr, size_t size);
+
 #endif //! __MEMORY_CONFIG_H__
