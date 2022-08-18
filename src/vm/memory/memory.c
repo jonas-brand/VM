@@ -1,6 +1,7 @@
 #include "mem_access.h"
 #include "mem_config.h"
 #include <memory.h>
+#include <stdio.h>
 
 //page mapping configuration
 static struct
@@ -49,4 +50,13 @@ bool mem_load(dtptr_t addr, size_t size, uint8_t* data)
     if(((uint32_t)addr + size) > 0xFF) return false;
 
     memcpy(memory + addr, data, size);
+}
+
+//===========================================================================================function for printing out memory
+bool mem_print(dtptr_t addr, size_t size)
+{
+    if(((uint32_t)addr + size) > 0xFF) return false;
+
+    for(addr; addr < (addr + size); addr++)
+        printf("%x/t%x", addr, memory[addr]);
 }
