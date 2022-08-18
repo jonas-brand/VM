@@ -47,7 +47,7 @@ void mem_map(pgptr_t page, memacc_act_t on_fech, memacc_act_t on_write)
 //===========================================================================================function for loading data into memory
 bool mem_load(dtptr_t addr, size_t size, uint8_t* data)
 {
-    if(((uint32_t)addr + size) > 0xFF) return false;
+    if(((uint32_t)addr + size) > 0xFFFF) return false;
 
     memcpy(memory + addr, data, size);
 }
@@ -55,8 +55,10 @@ bool mem_load(dtptr_t addr, size_t size, uint8_t* data)
 //===========================================================================================function for printing out memory
 bool mem_print(dtptr_t addr, size_t size)
 {
-    if(((uint32_t)addr + size) > 0xFF) return false;
+    if(((uint32_t)addr + size) > 0xFFFF) return false;
 
-    for(addr; addr < (addr + size); addr++)
-        printf("%x/t%x", addr, memory[addr]);
+    for(uint16_t i; i < size; i++)
+        printf("%04X\t%02X\n", addr + i, memory[addr + i]);
+
+    return true;
 }

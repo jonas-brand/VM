@@ -5,7 +5,8 @@
 
 int main(void)
 {
-    mem_print(0xFF, 10);
+    if(! mem_print(0x0, 0xFF))
+        printf("ERROR!");
 
     return EXIT_SUCCESS;
 }
