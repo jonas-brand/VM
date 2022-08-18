@@ -14,14 +14,28 @@ static struct
 //main memory
 static uint8_t memory[0xFFFF];
 
+//===========================================================================================function for calculating page address
+static pgptr_t get_pg_addr(dtptr_t addr)
+{
+    return (pgptr_t)(addr >> 8);
+}
+
 //===========================================================================================fech memory functions
 uint16_t mem_fech_16(dtptr_t addr)
 {
+    pgptr_t page = get_pg_addr(addr);
+    if(pgconfig[page].mapped)
+        return pgconfig[page].on_fech(memory, addr);
+
     return *(uint16_t*)(memory + addr);
 }
 
 uint32_t mem_fech_32(dtptr_t addr)
 {
+    pgptr_t page = get_pg_addr(addr);
+    if(pgconfig[page].mapped)
+        return pgconfig[page].on_fech(memory, addr);
+
     return *(uint32_t*)(memory + addr);
 }
 
