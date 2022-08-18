@@ -7,8 +7,8 @@
 static struct
 {
     bool mapped;
-    memacc_act_t on_fech;
-    memacc_act_t on_write;
+    memfech_act_t on_fech;
+    memwrite_act_t on_write;
 }pgconfig[0xFF];
 
 //main memory
@@ -37,7 +37,7 @@ void mem_write_32(dtptr_t addr, uint32_t data)
 }
 
 //===========================================================================================function for configuring maped memory
-void mem_map(pgptr_t page, memacc_act_t on_fech, memacc_act_t on_write)
+void mem_map(pgptr_t page, memfech_act_t on_fech, memwrite_act_t on_write)
 {
     pgconfig[page].mapped = true;
     pgconfig[page].on_fech = on_fech;
