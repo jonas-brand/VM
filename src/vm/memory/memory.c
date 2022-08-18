@@ -50,6 +50,8 @@ bool mem_load(dtptr_t addr, size_t size, uint8_t* data)
     if(((uint32_t)addr + size) > 0xFFFF) return false;
 
     memcpy(memory + addr, data, size);
+
+    return true;
 }
 
 //===========================================================================================function for printing out memory
