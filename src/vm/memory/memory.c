@@ -42,11 +42,19 @@ uint32_t mem_fech_32(dtptr_t addr)
 //===========================================================================================write memory functions
 void mem_write_16(dtptr_t addr, uint16_t data)
 {
+    pgptr_t page = get_pg_addr(addr);
+    if(pgconfig[page].mapped)
+        return pgconfig[page].on_write(memory, addr, data);
+
     *(uint16_t*)(memory + addr) = data;
 }
 
 void mem_write_32(dtptr_t addr, uint32_t data)
 {
+    pgptr_t page = get_pg_addr(addr);
+    if(pgconfig[page].mapped)
+        return pgconfig[page].on_write(memory, addr, data);
+
     *(uint32_t*)(memory + addr) = data;
 }
 
