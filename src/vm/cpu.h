@@ -1,8 +1,12 @@
 #ifndef __CPU_H__
 #define __CPU_H__
 
+#include <stdint.h>
+
 //instruction type
 typedef uint16_t instr_t;
+
+#define INSTR(arg1, arg2, instruction) (instr_t)((arg1 << 12) | (arg2 << 8) | instruction)
 
 //instructions
 enum
