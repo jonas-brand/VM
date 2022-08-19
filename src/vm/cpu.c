@@ -1,5 +1,6 @@
 #include "cpu.h"
 #include "memory/mem_access.h"
+#include <stdbool.h>
 
 //type for pointers to general perpose registers
 typedef uint16_t regptr_t;
@@ -27,7 +28,7 @@ static struct
     }gpr;
 
     uint16_t status;    //status register
-    uint16_t istr_ptr;  //instruction pointer
-    uint16_t stk_ptr;   //stack pointer
-    uint16_t ivt_ptr;   //pointer to interrupt vector table
+    uint16_t ip;  //instruction pointer
+    uint16_t sp;   //stack pointer
+    uint16_t ivtp;   //pointer to interrupt vector table
 }cpu;
