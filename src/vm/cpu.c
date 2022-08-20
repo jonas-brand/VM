@@ -45,6 +45,17 @@ static struct
     uint16_t ivtp;   //pointer to interrupt vector table
 }cpu;
 
+//=======================================================================================functions for parsing instructions
+static arg_type_t parse_arg1(instr_t instr)
+{
+    return (arg_type_t)((instr >> 12) & 0xF);
+}
+
+static arg_type_t parse_arg2(instr_t instr)
+{
+    return (arg_type_t)((instr >> 8) & 0xF);
+}
+
 //=======================================================================================function for executing next programm step
 void cpu_clk(void)
 {

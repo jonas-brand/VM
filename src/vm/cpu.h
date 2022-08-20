@@ -42,7 +42,7 @@ enum
     jnz
 }instructions;
 
-enum
+typedef enum
 {
     l16,
     l32,
@@ -50,7 +50,7 @@ enum
     m32,
     r16,
     r32
-}arg_types;
+}arg_type_t;
 
 //function for executing next programm step
 void cpu_clk(void);
