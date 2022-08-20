@@ -13,13 +13,8 @@ enum
 {
     nop,
     mov,
-    sip,
-    ssp,
-    sivtp,
     psh,
     pop,
-    cli,
-    sei,
     add,
     sub,
     mul,
@@ -38,14 +33,15 @@ enum
     not,
     xor,
     jmp,
-    jz,
-    jnz
+    jz
 }instructions;
 
 typedef enum
 {
+    l8,
     l16,
     l32,
+    m8,
     m16,
     m32,
     r16,
