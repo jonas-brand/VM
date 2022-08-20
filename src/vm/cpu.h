@@ -52,4 +52,7 @@ enum
     r32
 }arg_types;
 
+//function for executing next programm step
+void cpu_clk(void);
+
 #endif //! __CPU_H__

@@ -44,3 +44,9 @@ static struct
     uint16_t sp;   //stack pointer
     uint16_t ivtp;   //pointer to interrupt vector table
 }cpu;
+
+//=======================================================================================function for executing next programm step
+void cpu_clk(void)
+{
+    
+}
