@@ -21,6 +21,15 @@ static pgptr_t get_pg_addr(dtptr_t addr)
 }
 
 //===========================================================================================fech memory functions
+uint8_t mem_fech_8(dtptr_t addr)
+{
+    pgptr_t page = get_pg_addr(addr);
+    if(pgconfig[page].mapped)
+        return pgconfig[page].on_fech(memory, addr);
+
+    return memory[addr];
+}
+
 uint16_t mem_fech_16(dtptr_t addr)
 {
     pgptr_t page = get_pg_addr(addr);
@@ -40,6 +49,15 @@ uint32_t mem_fech_32(dtptr_t addr)
 }
 
 //===========================================================================================write memory functions
+void mem_write_8(dtptr_t addr, uint8_t data)
+{
+    pgptr_t page = get_pg_addr(addr);
+    if(pgconfig[page].mapped)
+        return pgconfig[page].on_write(memory, addr, data);
+
+    memory[addr] = data;
+}
+
 void mem_write_16(dtptr_t addr, uint16_t data)
 {
     pgptr_t page = get_pg_addr(addr);
