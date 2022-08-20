@@ -23,6 +23,17 @@ typedef enum
     gpr3h = gpr3 + 2
 }gpr16ptr_t;
 
+//type for representing instruction argument
+typedef union
+{
+    uint16_t l16;
+    uint32_t l32;
+    dtptr_t m16;
+    dtptr_t m32;
+    gpr16ptr_t r16;
+    gpr32ptr_t r32;
+}arg_t;
+
 //struct for holding cpu information
 static struct
 {
