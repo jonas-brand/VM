@@ -33,7 +33,7 @@ enum
     not,
     xor,
     jmp,
-    jz
+    jze
 }instructions;
 
 typedef enum

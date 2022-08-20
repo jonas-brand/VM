@@ -2,7 +2,7 @@
 #include "memory/mem_access.h"
 #include <stdbool.h>
 
-//types for pointers to general perpose registers
+//types for pointers to registers
 typedef enum
 {
     gpr0,
@@ -26,8 +26,18 @@ typedef enum
     stat = sp + 2
 }r16ptr_t;
 
+//status register bits
+enum
+{
+    ivtptr = 0,
+    paie = 12,
+    ie = 13,
+    ca = 14,
+    ze = 15
+};
+
 //memory for general perpose registers
-uint8_t gp_regs[22];
+uint8_t regs[22];
 
 //=======================================================================================functions for parsing instructions
 static arg_type_t parse_arg1(instr_t instr)
