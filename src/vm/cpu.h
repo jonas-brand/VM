@@ -38,6 +38,7 @@ enum
 
 typedef enum
 {
+    none,
     l8,
     l16,
     l32,

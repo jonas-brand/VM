@@ -2,6 +2,9 @@
 #include "memory/mem_access.h"
 #include <stdbool.h>
 
+//bit value macro
+#define BV(bit) (1 << bit)
+
 //types for pointers to registers
 typedef enum
 {
@@ -50,8 +53,17 @@ static arg_type_t parse_arg2(instr_t instr)
     return (arg_type_t)((instr >> 8) & 0xF);
 }
 
+static size_t arg_size(arg_type_t arg_type)
+{
+    if(arg_type == none) return 0;
+    if(arg_type == l8 && arg_type == r16 && arg_type == r32) return 1;
+    if(arg_type == l32) return 4;
+    return 2;
+}
+
 //=======================================================================================function for executing next programm step
 void cpu_clk(void)
 {
-    
+    //fech instruction
+    instr_t instr = mem_fech_16(regs[ip]);
 }
