@@ -1,6 +1,7 @@
 #include "cpu.h"
 #include "memory/mem_access.h"
 #include <stdbool.h>
+#include <math.h>
 
 //bit value macro
 #define BV(bit) (1 << bit)
@@ -50,6 +51,7 @@ uint8_t regs[22];
 //macros for accessing registers
 #define R16(reg) *(uint16_t*)(regs + (r16ptr_t)reg)
 #define R32(reg) *(uint32_t*)(regs + (r32ptr_t)reg)
+#define RF(reg) *(float*)(regs + (r32ptr_t)reg)
 
 //=======================================================================================functions for parsing instructions
 static arg_type_t parse_arg1(instr_t instr)
@@ -202,6 +204,31 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
         //decrement r32
         case INSTR(r32, none, dec):
             (R32(arg1))--;
+            break;
+
+        //add r32 to r32 as floating point
+        case INSTR(r32, r32, fadd):
+            RF(arg2) += RF(arg1);
+            break;
+
+        //subtract r32 from r32 as floating point
+        case INSTR(r32, r32, fsub):
+            RF(arg2) -= RF(arg1);
+            break;
+
+        //multiply r32 with r32 as floating point
+        case INSTR(r32, r32, fmul):
+            RF(arg2) *= RF(arg1);
+            break;
+
+        //divide r32 by r32 as floating point
+        case INSTR(r32, r32, fdiv):
+            RF(arg2) /= RF(arg1);
+            break;
+
+        //get square root of r32 as floating point
+        case INSTR(r32, r32, fsqrt):
+            RF(arg2) = sqrt(RF(arg1));
             break;
 
         //error, jump to panic interrupt

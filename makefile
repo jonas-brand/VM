@@ -20,7 +20,7 @@ OBJ_FILES := $(patsubst %.c, bin\\%.o, $(SRC_FILES))
 
 #link all .o files together
 bin\\out.exe: $(OBJ_FILES)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) -L. -lm $^ -o $@
 
 #compile .c file to .o file
 bin\\%.o: src\\%.c
