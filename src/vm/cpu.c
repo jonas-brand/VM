@@ -49,9 +49,9 @@ enum
 uint8_t regs[22];
 
 //macros for accessing registers
-#define R16(reg) *(uint16_t*)(regs + (r16ptr_t)reg)
-#define R32(reg) *(uint32_t*)(regs + (r32ptr_t)reg)
-#define RF(reg) *(float*)(regs + (r32ptr_t)reg)
+#define R16(reg) *(uint16_t*)(regs + (r16ptr_t)(uint8_t)reg)
+#define R32(reg) *(uint32_t*)(regs + (r32ptr_t)(uint8_t)reg)
+#define RF(reg) *(float*)(regs + (r32ptr_t)(uint8_t)reg)
 
 //=======================================================================================functions for parsing instructions
 static arg_type_t parse_arg1(instr_t instr)
