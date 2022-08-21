@@ -78,249 +78,249 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
     switch(instr)
     {
         //no operation
-        case INSTR(none, none, nop):
+        case INSTR(none, none, vm_nop):
             break;
 
         //move l8 into lower byte of r16
-        case INSTR(l8, r16, mov):
+        case INSTR(l8, r16, vm_mov):
             R16(arg2) = (uint8_t)arg1;
             break;
 
         //move m8 into lower byte of r16
-        case INSTR(m8, r16, mov):
+        case INSTR(m8, r16, vm_mov):
             R16(arg2) = mem_fech_8((dtptr_t)arg1);
             break;
 
         //move lower byte of r16 into m8
-        case INSTR(r16, m8, mov):
+        case INSTR(r16, m8, vm_mov):
             mem_write_8((dtptr_t)arg2, (uint8_t)R16(arg1));
             break;
 
         //move l16 into r16
-        case INSTR(l16, r16, mov):
+        case INSTR(l16, r16, vm_mov):
             R16(arg2) = (uint16_t)arg1;
             break;
 
         //move m16 into r16
-        case INSTR(m16, r16, mov):
+        case INSTR(m16, r16, vm_mov):
             R16(arg2) = mem_fech_16((dtptr_t)arg1);
             break;
 
         //move r16 into m16
-        case INSTR(r16, m16, mov):
+        case INSTR(r16, m16, vm_mov):
             mem_write_16((dtptr_t)arg2, R16(arg1));
             break;
 
         //move l32 into r32
-        case INSTR(l32, r32, mov):
+        case INSTR(l32, r32, vm_mov):
             R32(arg2) = (uint32_t)arg1;
             break;
 
         //move m32 into r32
-        case INSTR(m32, r32, mov):
+        case INSTR(m32, r32, vm_mov):
             R32(arg2) = mem_fech_32((dtptr_t)arg1);
             break;
 
         //move r32 into m32
-        case INSTR(r32, m32, mov):
+        case INSTR(r32, m32, vm_mov):
             mem_write_32((dtptr_t)arg2, R32(arg1));
             break;
 
         //push r16 onto the stack
-        case INSTR(r16, none, psh):
+        case INSTR(r16, none, vm_psh):
             mem_write_16((dtptr_t)R16(ip), R16(arg1));
             break;
 
         //push r32 onto the stack
-        case INSTR(r32, none, psh):
+        case INSTR(r32, none, vm_psh):
             mem_write_32((dtptr_t)R16(ip), R32(arg1));
             break;
 
         //pop 2 bytes of the stack into r16
-        case INSTR(r16, none, pop):
+        case INSTR(r16, none, vm_pop):
             R16(arg1) = mem_fech_16((dtptr_t)R16(ip));
             break;
 
         //pop 4 bytes of the stack into r32
-        case INSTR(r32, none, pop):
+        case INSTR(r32, none, vm_pop):
             R32(arg1) = mem_fech_32((dtptr_t)R16(ip));
             break;
 
         //add r16 to r16
-        case INSTR(r16, r16, add):
+        case INSTR(r16, r16, vm_add):
             R16(arg2) += R16(arg1);
             break;
 
         //add r32 to r32
-        case INSTR(r32, r32, add):
+        case INSTR(r32, r32, vm_add):
             R32(arg2) += R32(arg1);
             break;
 
         //subtract r16 from r16
-        case INSTR(r16, r16, sub):
+        case INSTR(r16, r16, vm_sub):
             R16(arg2) -= R16(arg1);
             break;
 
         //subtract r32 from r32
-        case INSTR(r32, r32, sub):
+        case INSTR(r32, r32, vm_sub):
             R32(arg2) -= R32(arg1);
             break;
         
         //multiply r16 with r16
-        case INSTR(r16, r16, mul):
+        case INSTR(r16, r16, vm_mul):
             R16(arg2) *= R16(arg1);
             break;
 
         //multiply r32 with r32
-        case INSTR(r32, r32, mul):
+        case INSTR(r32, r32, vm_mul):
             R32(arg2) *= R32(arg1);
             break;
 
         //divide r16 by r16
-        case INSTR(r16, r16, div):
+        case INSTR(r16, r16, vm_div):
             R16(arg2) /= R16(arg1);
             break;
 
         //divide r32 by r32
-        case INSTR(r32, r32, div):
+        case INSTR(r32, r32, vm_div):
             R32(arg2) /= R32(arg1);
             break;
 
         //increment r16
-        case INSTR(r16, none, inc):
+        case INSTR(r16, none, vm_inc):
             (R16(arg1))++;
             break;
 
         //increment r32
-        case INSTR(r32, none, inc):
+        case INSTR(r32, none, vm_inc):
             (R32(arg1))++;
             break;
 
         //decrement r16
-        case INSTR(r16, none, dec):
+        case INSTR(r16, none, vm_dec):
             (R16(arg1))--;
             break;
 
         //decrement r32
-        case INSTR(r32, none, dec):
+        case INSTR(r32, none, vm_dec):
             (R32(arg1))--;
             break;
 
         //add r32 to r32 as floating point
-        case INSTR(r32, r32, fadd):
+        case INSTR(r32, r32, vm_fadd):
             RF(arg2) += RF(arg1);
             break;
 
         //subtract r32 from r32 as floating point
-        case INSTR(r32, r32, fsub):
+        case INSTR(r32, r32, vm_fsub):
             RF(arg2) -= RF(arg1);
             break;
 
         //multiply r32 with r32 as floating point
-        case INSTR(r32, r32, fmul):
+        case INSTR(r32, r32, vm_fmul):
             RF(arg2) *= RF(arg1);
             break;
 
         //divide r32 by r32 as floating point
-        case INSTR(r32, r32, fdiv):
+        case INSTR(r32, r32, vm_fdiv):
             RF(arg2) /= RF(arg1);
             break;
 
         //get square root of r32 as floating point
-        case INSTR(r32, r32, fsqrt):
+        case INSTR(r32, r32, vm_fsqrt):
             RF(arg2) = sqrt(RF(arg1));
             break;
 
         //shift r16 left by r16
-        case INSTR(r16, r16, shl):
+        case INSTR(r16, r16, vm_shl):
             R16(arg2) <<= R16(arg1);
             break;
 
         //shift r32 left by r16
-        case INSTR(r32, r16, shl):
+        case INSTR(r32, r16, vm_shl):
             R32(arg2) <<= R16(arg1);
             break;
 
         //shift r16 right by r16
-        case INSTR(r16, r16, shr):
+        case INSTR(r16, r16, vm_shr):
             R16(arg2) >>= R16(arg1);
             break;
 
         //shift r32 right by r16
-        case INSTR(r32, r16, shr):
+        case INSTR(r32, r16, vm_shr):
             R32(arg2) >>= R16(arg1);
             break;
 
         //bitwise-and r16 and r16
-        case INSTR(r16, r16, and):
+        case INSTR(r16, r16, vm_and):
             R16(arg2) &= R16(arg1);
             break;
 
         //bitwise-and r32 and r32
-        case INSTR(r32, r32, and):
+        case INSTR(r32, r32, vm_and):
             R32(arg2) &= R16(arg1);
             break;
 
         //bitwise-or r16 and r16
-        case INSTR(r16, r16, or):
+        case INSTR(r16, r16, vm_or):
             R16(arg2) |= R16(arg1);
             break;
 
         //bitwise-or r32 and r32
-        case INSTR(r32, r32, or):
+        case INSTR(r32, r32, vm_or):
             R32(arg2) |= R16(arg1);
             break;
 
         //bitwise-not r16
-        case INSTR(r16, none, not):
+        case INSTR(r16, none, vm_not):
             R16(arg1) = ~R16(arg1);
             break;
 
         //bitwise-not r32
-        case INSTR(r32, none, not):
+        case INSTR(r32, none, vm_not):
             R32(arg1) = ~R16(arg1);
             break;
 
         //bitwise-xor r16 and r16
-        case INSTR(r16, r16, xor):
+        case INSTR(r16, r16, vm_xor):
             R16(arg2) ^= R16(arg1);
             break;
 
         //bitwise-xor r32 and r32
-        case INSTR(r32, r32, xor):
+        case INSTR(r32, r32, vm_xor):
             R32(arg2) ^= R16(arg1);
             break;
 
         //unconditional jump to l16
-        case INSTR(l16, none, jmp):
+        case INSTR(l16, none, vm_jmp):
             R16(ip) = (dtptr_t)arg1;
             break;
 
         //unconditional jump to r16
-        case INSTR(r16, none, jmp):
+        case INSTR(r16, none, vm_jmp):
             R16(ip) = R16(arg1);
             break;
 
         //jump to l16 if r16 is zero
-        case INSTR(l16, r16, jze):
+        case INSTR(l16, r16, vm_jze):
             if(R16(arg2)) break;
             R16(ip) = arg1;
             break;
 
         //jump to r16 if r16 is zero
-        case INSTR(r16, r16, jze):
+        case INSTR(r16, r16, vm_jze):
             if(R16(arg2)) break;
             R16(ip) = R16(arg1);
             break;
 
         //jump to l16 if r32 is zero
-        case INSTR(l16, r32, jze):
+        case INSTR(l16, r32, vm_jze):
             if(R32(arg2)) break;
             R16(ip) = arg1;
             break;
 
         //jump to r16 if r32 is zero
-        case INSTR(r16, r32, jze):
+        case INSTR(r16, r32, vm_jze):
             if(R32(arg2)) break;
             R16(ip) = R16(arg1);
             break;
