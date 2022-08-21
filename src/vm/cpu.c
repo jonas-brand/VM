@@ -333,6 +333,6 @@ void cpu_clk(void)
 //=======================================================================================function for printing out cpu state
 void cpu_print(void)
 {
-    printf("gpr0:\t%04X\ngpr1:\t%04X\ngpr2:\t%04X\ngpr3:\t%04X\nip:\t%02X\nsp:\t%02X\nstat:\t%02X\n",
+    printf("gpr0:\t%08X\ngpr1:\t%08X\ngpr2:\t%08X\ngpr3:\t%08X\nip:\t%04X\nsp:\t%04X\nstat:\t%04X\n",
            R32(gpr0), R32(gpr1), R32(gpr2), R32(gpr3), R16(ip), R16(sp), R16(stat));
 }
