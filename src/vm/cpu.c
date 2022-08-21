@@ -44,7 +44,7 @@ static arg_type_t parse_arg2(instr_t instr)
 static size_t arg_size(arg_type_t arg_type)
 {
     if(arg_type == none) return 0;
-    if(arg_type == l8 && arg_type == r16 && arg_type == r32) return 1;
+    if(arg_type == l8 || arg_type == r16 || arg_type == r32) return 1;
     if(arg_type == l32) return 4;
     return 2;
 }
@@ -333,6 +333,6 @@ void cpu_clk(void)
 //=======================================================================================function for printing out cpu state
 void cpu_print(void)
 {
-    printf("gpr0:\t%04X\ngpr1:\t%04X\ngpr2:\t%04X\ngpr3:\t%04X\nip:\t%02X\nsp:\t%02X\nstat:\t%02X",
+    printf("gpr0:\t%04X\ngpr1:\t%04X\ngpr2:\t%04X\ngpr3:\t%04X\nip:\t%02X\nsp:\t%02X\nstat:\t%02X\n",
            R32(gpr0), R32(gpr1), R32(gpr2), R32(gpr3), R16(ip), R16(sp), R16(stat));
 }
