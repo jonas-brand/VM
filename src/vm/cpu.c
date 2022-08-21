@@ -236,7 +236,7 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
             R16(arg2) <<= R16(arg1);
             break;
 
-        //add r32 left by r16
+        //shift r32 left by r16
         case INSTR(r32, r16, shl):
             R32(arg2) <<= R16(arg1);
             break;
@@ -246,9 +246,49 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
             R16(arg2) >>= R16(arg1);
             break;
 
-        //add r32 right by r16
+        //shift r32 right by r16
         case INSTR(r32, r16, shr):
             R32(arg2) >>= R16(arg1);
+            break;
+
+        //bitwise-and r16 and r16
+        case INSTR(r16, r16, and):
+            R16(arg2) &= R16(arg1);
+            break;
+
+        //bitwise-and r32 and r32
+        case INSTR(r32, r32, and):
+            R32(arg2) &= R16(arg1);
+            break;
+
+        //bitwise-or r16 and r16
+        case INSTR(r16, r16, or):
+            R16(arg2) |= R16(arg1);
+            break;
+
+        //bitwise-or r32 and r32
+        case INSTR(r32, r32, or):
+            R32(arg2) |= R16(arg1);
+            break;
+
+        //bitwise-not r16
+        case INSTR(r16, none, not):
+            R16(arg1) = ~R16(arg1);
+            break;
+
+        //bitwise-not r32
+        case INSTR(r32, none, not):
+            R32(arg1) = ~R16(arg1);
+            break;
+
+        //bitwise-xor r16 and r16
+        case INSTR(r16, r16, xor):
+            R16(arg2) ^= R16(arg1);
+            break;
+
+        //bitwise-xor r32 and r32
+        case INSTR(r32, r32, xor):
+            R32(arg2) ^= R16(arg1);
             break;
 
         //error, jump to panic interrupt
