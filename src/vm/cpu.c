@@ -61,6 +61,12 @@ static size_t arg_size(arg_type_t arg_type)
     return 2;
 }
 
+//=======================================================================================function for executing instruction
+void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
+{
+
+}
+
 //=======================================================================================function for executing next programm step
 void cpu_clk(void)
 {
