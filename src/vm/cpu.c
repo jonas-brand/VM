@@ -184,6 +184,26 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
             R32(arg2) /= R32(arg1);
             break;
 
+        //increment r16
+        case INSTR(r16, none, inc):
+            (R16(arg1))++;
+            break;
+
+        //increment r32
+        case INSTR(r32, none, inc):
+            (R32(arg1))++;
+            break;
+
+        //decrement r16
+        case INSTR(r16, none, dec):
+            (R16(arg1))--;
+            break;
+
+        //decrement r32
+        case INSTR(r32, none, dec):
+            (R32(arg1))--;
+            break;
+
         //error, jump to panic interrupt
         default:
             R16(ip) = (R16(stat) << 8) + pai;
