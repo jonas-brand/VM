@@ -49,7 +49,34 @@ typedef enum
     r32
 }arg_type_t;
 
+//types for pointers to registers
+typedef enum
+{
+    gpr0,
+    gpr1 = gpr0 + 4,
+    gpr2 = gpr1 + 4,
+    gpr3 = gpr2 + 4
+}r32ptr_t;
+
+typedef enum
+{
+    gpr0l = gpr0,
+    gpr0h = gpr0 + 2,
+    gpr1l = gpr1,
+    gpr1h = gpr1 + 2,
+    gpr2l = gpr2,
+    gpr2h = gpr2 + 2,
+    gpr3l = gpr3,
+    gpr3h = gpr3 + 2,
+    ip = gpr3 + 4,
+    sp = ip + 2,
+    stat = sp + 2
+}r16ptr_t;
+
 //function for executing next programm step
 void cpu_clk(void);
+
+//function for printing out cpu state
+void cpu_print(void);
 
 #endif //! __CPU_H__
