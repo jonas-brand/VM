@@ -39,6 +39,12 @@ enum
     ze = 15
 };
 
+//interrupt vector table layout
+enum
+{
+    pai = 0
+};
+
 //memory for general perpose registers
 uint8_t regs[22];
 
@@ -64,7 +70,62 @@ static size_t arg_size(arg_type_t arg_type)
 //=======================================================================================function for executing instruction
 void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
 {
+    switch(instr)
+    {
+        //no operation
+        case INSTR(none, none, nop):
+            break;
 
+        //move l8 into lower byte of r16
+        case INSTR(l8, r16, mov):
+            regs[(r16ptr_t)arg2] = (uint8_t)arg1;
+            break;
+
+        //move m8 into lower byte of r16
+        case INSTR(m8, r16, mov):
+            regs[(r16ptr_t)arg2] = mem_fech_8((dtptr_t)arg1);
+            break;
+
+        //move lower byte of r16 into m8
+        case INSTR(r16, m8, mov):
+            mem_write_8((dtptr_t)arg2, (uint8_t)regs[(r16ptr_t)arg1]);
+            break;
+
+        //move l16 into r16
+        case INSTR(l16, r16, mov):
+            *(uint16_t*)(regs + (r16ptr_t)arg2) = (uint16_t)arg1;
+            break;
+
+        //move m16 into r16
+        case INSTR(m16, r16, mov):
+            *(uint16_t*)(regs + (r16ptr_t)arg2) = mem_fech_16((dtptr_t)arg1);
+            break;
+
+        //move r16 into m16
+        case INSTR(r16, m16, mov):
+            mem_write_16((dtptr_t)arg2, *(uint16_t*)(regs + (r16ptr_t)arg1));
+            break;
+
+        //move l32 into r32
+        case INSTR(l32, r32, mov):
+            *(uint32_t*)(regs + (r32ptr_t)arg2) = (uint32_t)arg1;
+            break;
+
+        //move m32 into r32
+        case INSTR(m32, r32, mov):
+            *(uint32_t*)(regs + (r32ptr_t)arg2) = mem_fech_32((dtptr_t)arg1);
+            break;
+
+        //move r32 into m32
+        case INSTR(r32, m32, mov):
+            mem_write_32((dtptr_t)arg2, *(uint32_t*)(regs + (r32ptr_t)arg1));
+            break;
+
+        //error, jump to panic interrupt
+        default:
+            regs[ip] = (regs[stat] << 8) + pai;
+            break;
+    }
 }
 
 //=======================================================================================function for executing next programm step
