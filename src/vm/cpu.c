@@ -144,6 +144,46 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
             R32(arg1) = mem_fech_32((dtptr_t)R16(ip));
             break;
 
+        //add r16 to r16
+        case INSTR(r16, r16, add):
+            R16(arg2) += R16(arg1);
+            break;
+
+        //add r32 to r32
+        case INSTR(r32, r32, add):
+            R32(arg2) += R32(arg1);
+            break;
+
+        //subtract r16 from r16
+        case INSTR(r16, r16, sub):
+            R16(arg2) -= R16(arg1);
+            break;
+
+        //subtract r32 from r32
+        case INSTR(r32, r32, sub):
+            R32(arg2) -= R32(arg1);
+            break;
+        
+        //multiply r16 with r16
+        case INSTR(r16, r16, mul):
+            R16(arg2) *= R16(arg1);
+            break;
+
+        //multiply r32 with r32
+        case INSTR(r32, r32, mul):
+            R32(arg2) *= R32(arg1);
+            break;
+
+        //divide r16 by r16
+        case INSTR(r16, r16, div):
+            R16(arg2) /= R16(arg1);
+            break;
+
+        //divide r32 by r32
+        case INSTR(r32, r32, div):
+            R32(arg2) /= R32(arg1);
+            break;
+
         //error, jump to panic interrupt
         default:
             R16(ip) = (R16(stat) << 8) + pai;
