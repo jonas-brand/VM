@@ -346,6 +346,9 @@ void cpu_clk(void)
     uint32_t arg1 = arg1_size ? mem_fech_32(regs[ip] + 2) : 0;
     uint32_t arg2 = arg2_size ? mem_fech_32(regs[ip] + 2 + arg1_size) : 0;
 
+    //execute instruction
+    instr_exec(instr, arg1, arg2);
+
     //increment instruction pointer
     regs[ip] += 2 + arg1_size + arg2_size;
 }
