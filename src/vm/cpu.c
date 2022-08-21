@@ -66,4 +66,15 @@ void cpu_clk(void)
 {
     //fech instruction
     instr_t instr = mem_fech_16(regs[ip]);
+
+    //get size of arguments
+    size_t arg1_size = arg_size(parse_arg1(instr));
+    size_t arg2_size = arg_size(parse_arg2(instr));
+
+    //fech arguments
+    uint32_t arg1 = arg1_size ? mem_fech_32(regs[ip] + 2) : 0;
+    uint32_t arg2 = arg2_size ? mem_fech_32(regs[ip] + 2 + arg1_size) : 0;
+
+    //increment instruction pointer
+    regs[ip] += 2 + arg1_size + arg2_size;
 }
