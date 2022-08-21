@@ -33,10 +33,9 @@ typedef enum
 enum
 {
     ivtptr = 0,
-    paie = 12,
-    ie = 13,
-    ca = 14,
-    ze = 15
+    paie = 13,
+    ie = 14,
+    ca = 15,
 };
 
 //interrupt vector table layout
@@ -47,6 +46,10 @@ enum
 
 //memory for general perpose registers
 uint8_t regs[22];
+
+//macros for accessing registers
+#define R16(reg) *(uint16_t*)(regs + (r16ptr_t)arg)
+#define R32(reg) *(uint32_t*)(regs + (r32ptr_t)arg)
 
 //=======================================================================================functions for parsing instructions
 static arg_type_t parse_arg1(instr_t instr)
@@ -119,6 +122,11 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
         //move r32 into m32
         case INSTR(r32, m32, mov):
             mem_write_32((dtptr_t)arg2, *(uint32_t*)(regs + (r32ptr_t)arg1));
+            break;
+
+        //push r16 onto the stack
+        case INSTR(r16, none, psh):
+            mem_write_16(*(dtptr_t*)(regs + (r16ptr_t)ip), (uint16_t)arg1);
             break;
 
         //error, jump to panic interrupt
