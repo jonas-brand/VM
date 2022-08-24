@@ -11,9 +11,8 @@
 static uint8_t prgm[PRGM_SIZE] =
 {
     DT16(INSTR(l16, r16, vm_mov)), DT16(3), gpr0l,  //gpr01 = 3
-    DT16(INSTR(r16, none, vm_dec)), gpr0l,          //gpr0l--
-    DT16(INSTR(l16, r16, vm_jze)), DT16(20), gpr0l,  //jump 20 if gpr0l == 0
-    DT16(INSTR(l16, none, vm_jmp)), DT16(5)         //jump to 5
+    DT16(INSTR(r16, none, vm_psh)), gpr0l,
+    DT16(INSTR(r16, none, vm_pop)), gpr1l,
 };
 
 int main(void)
