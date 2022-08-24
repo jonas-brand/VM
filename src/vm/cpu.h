@@ -33,7 +33,9 @@ enum
     vm_not,
     vm_xor,
     vm_jmp,
-    vm_jze
+    vm_jze,
+    vm_cal,
+    vm_rt
 }instructions;
 
 typedef enum

@@ -116,22 +116,26 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
 
         //push r16 onto the stack
         case INSTR(r16, none, vm_psh):
-            mem_write_16((dtptr_t)R16(ip), R16(arg1));
+            mem_write_16((dtptr_t)R16(sp), R16(arg1));
+            R16(sp) += 2;
             break;
 
         //push r32 onto the stack
         case INSTR(r32, none, vm_psh):
-            mem_write_32((dtptr_t)R16(ip), R32(arg1));
+            mem_write_32((dtptr_t)R16(sp), R32(arg1));
+            R16(sp) += 4;
             break;
 
         //pop 2 bytes of the stack into r16
         case INSTR(r16, none, vm_pop):
-            R16(arg1) = mem_fech_16((dtptr_t)R16(ip));
+            R16(sp) -= 2;
+            R16(arg1) = mem_fech_16((dtptr_t)R16(sp));
             break;
 
         //pop 4 bytes of the stack into r32
         case INSTR(r32, none, vm_pop):
-            R32(arg1) = mem_fech_32((dtptr_t)R16(ip));
+            R16(sp) -= 4;
+            R32(arg1) = mem_fech_32((dtptr_t)R16(sp));
             break;
 
         //add r16 to r16
@@ -310,6 +314,20 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
         //jump to r16 if r32 is zero
         case INSTR(r16, r32, vm_jze):
             if(R32(arg2)) break;
+            R16(ip) = R16(arg1);
+            break;
+
+        //jump to l16 and push return adress onto the stack
+        case INSTR(l16, none, vm_cal):
+            mem_write_16((dtptr_t)R16(sp), R16(sp));
+            R16(sp) += 2;
+            R16(ip) = (dtptr_t)arg1;
+            break;
+
+        //jump to r16 and push return adress onto the stack
+        case INSTR(r16, none, vm_cal):
+            mem_write_16((dtptr_t)R16(sp), R16(sp));
+            R16(sp) += 2;
             R16(ip) = R16(arg1);
             break;
 
