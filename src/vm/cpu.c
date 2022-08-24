@@ -21,18 +21,6 @@ enum
     ie = 15,
 };
 
-//interrupt vector table layout
-enum
-{
-    pai = 0,
-    gpi0 = pai + 2,
-    gpi1 = gpi0 + 2,
-    gpi2 = gpi1 + 2,
-    gpi3 = gpi2 + 2,
-    gpi4 = gpi3 + 2,
-    gpi5 = gpi4 + 2,
-};
-
 //memory for general perpose registers
 uint8_t regs[22];
 
@@ -335,10 +323,11 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
         case INSTR(none, none, vm_rt):
             R16(sp) -= 2;
             R16(ip) = mem_fech_16((dtptr_t)R16(sp));
+            break;
 
         //error, jump to panic interrupt
         default:
-            R16(ip) = (R16(stat) << 8) + pai;
+            cpu_cal_int(pai);
             break;
     }
 }
@@ -369,4 +358,12 @@ void cpu_print(void)
 {
     printf("gpr0:\t%08X\ngpr1:\t%08X\ngpr2:\t%08X\ngpr3:\t%08X\nip:\t%04X\nsp:\t%04X\nstat:\t%04X\n",
            R32(gpr0), R32(gpr1), R32(gpr2), R32(gpr3), R16(ip), R16(sp), R16(stat));
+}
+
+//function for calling interrupt
+void cpu_cal_int(intrpt_t interrupt)
+{
+    mem_write_16((dtptr_t)R16(sp), R16(sp));
+    R16(sp) += 2;
+    R16(ip) = (dtptr_t)(((uint8_t)R16(stat) << 8) + interrupt);
 }

@@ -75,10 +75,25 @@ typedef enum
     stat = sp + 2
 }r16ptr_t;
 
+//interrupt vector table layout
+typedef enum
+{
+    pai = 0,
+    gpi0 = pai + 2,
+    gpi1 = gpi0 + 2,
+    gpi2 = gpi1 + 2,
+    gpi3 = gpi2 + 2,
+    gpi4 = gpi3 + 2,
+    gpi5 = gpi4 + 2,
+}intrpt_t;
+
 //function for executing next programm step
 void cpu_clk(void);
 
 //function for printing out cpu state
 void cpu_print(void);
+
+//function for calling interrupt
+void cpu_cal_int(intrpt_t interrupt);
 
 #endif //! __CPU_H__
