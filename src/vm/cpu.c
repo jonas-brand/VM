@@ -11,15 +11,14 @@
 enum
 {
     ivtptr = 0,
-    paie = 13,
-    ie = 14,
-    ca = 15,
-};
-
-//interrupt vector table layout
-enum
-{
-    pai = 0
+    gpi5e = 8,
+    gpi4e = 9,
+    gpi3e = 10,
+    gpi2e = 11,
+    gpi1e = 12,
+    gpi0e = 13,
+    paie = 14,
+    ie = 15,
 };
 
 //memory for general perpose registers
@@ -105,22 +104,26 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
 
         //push r16 onto the stack
         case INSTR(r16, none, vm_psh):
-            mem_write_16((dtptr_t)R16(ip), R16(arg1));
+            mem_write_16((dtptr_t)R16(sp), R16(arg1));
+            R16(sp) += 2;
             break;
 
         //push r32 onto the stack
         case INSTR(r32, none, vm_psh):
-            mem_write_32((dtptr_t)R16(ip), R32(arg1));
+            mem_write_32((dtptr_t)R16(sp), R32(arg1));
+            R16(sp) += 4;
             break;
 
         //pop 2 bytes of the stack into r16
         case INSTR(r16, none, vm_pop):
-            R16(arg1) = mem_fech_16((dtptr_t)R16(ip));
+            R16(sp) -= 2;
+            R16(arg1) = mem_fech_16((dtptr_t)R16(sp));
             break;
 
         //pop 4 bytes of the stack into r32
         case INSTR(r32, none, vm_pop):
-            R32(arg1) = mem_fech_32((dtptr_t)R16(ip));
+            R16(sp) -= 4;
+            R32(arg1) = mem_fech_32((dtptr_t)R16(sp));
             break;
 
         //add r16 to r16
@@ -302,9 +305,29 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
             R16(ip) = R16(arg1);
             break;
 
+        //jump to l16 and push return adress onto the stack
+        case INSTR(l16, none, vm_cal):
+            mem_write_16((dtptr_t)R16(sp), R16(sp));
+            R16(sp) += 2;
+            R16(ip) = (dtptr_t)arg1;
+            break;
+
+        //jump to r16 and push return adress onto the stack
+        case INSTR(r16, none, vm_cal):
+            mem_write_16((dtptr_t)R16(sp), R16(sp));
+            R16(sp) += 2;
+            R16(ip) = R16(arg1);
+            break;
+
+        //pop 2 bytes of the stack and jump to that adress
+        case INSTR(none, none, vm_rt):
+            R16(sp) -= 2;
+            R16(ip) = mem_fech_16((dtptr_t)R16(sp));
+            break;
+
         //error, jump to panic interrupt
         default:
-            R16(ip) = (R16(stat) << 8) + pai;
+            cpu_cal_int(pai);
             break;
     }
 }
@@ -335,4 +358,12 @@ void cpu_print(void)
 {
     printf("gpr0:\t%08X\ngpr1:\t%08X\ngpr2:\t%08X\ngpr3:\t%08X\nip:\t%04X\nsp:\t%04X\nstat:\t%04X\n",
            R32(gpr0), R32(gpr1), R32(gpr2), R32(gpr3), R16(ip), R16(sp), R16(stat));
+}
+
+//function for calling interrupt
+void cpu_cal_int(intrpt_t interrupt)
+{
+    mem_write_16((dtptr_t)R16(sp), R16(sp));
+    R16(sp) += 2;
+    R16(ip) = (dtptr_t)(((uint8_t)R16(stat) << 8) + interrupt);
 }

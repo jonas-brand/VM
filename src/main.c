@@ -22,7 +22,7 @@ int main(void)
 
     cpu_print();
 
-    for(uint8_t i = 0; i < 15; i++)
+    for(uint8_t i = 0; i < 8; i++)
     {
         printf("\n");
         cpu_clk();
@@ -31,6 +31,4 @@ int main(void)
 
     printf("\n");
     mem_print(0xFF00, 10);
-
-    return EXIT_SUCCESS;
 }
