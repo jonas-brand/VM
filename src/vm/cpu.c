@@ -34,9 +34,14 @@ typedef enum
 enum
 {
     ivtptr = 0,
-    paie = 13,
-    ie = 14,
-    ca = 15,
+    gpi5e = 8,
+    gpi4e = 9,
+    gpi3e = 10,
+    gpi2e = 11,
+    gpi1e = 12,
+    gpi0e = 13,
+    paie = 14,
+    ie = 15,
 };
 
 //interrupt vector table layout
