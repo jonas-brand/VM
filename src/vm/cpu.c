@@ -331,6 +331,11 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
             R16(ip) = R16(arg1);
             break;
 
+        //pop 2 bytes of the stack and jump to that adress
+        case INSTR(none, none, vm_rt):
+            R16(sp) -= 2;
+            R16(ip) = mem_fech_16((dtptr_t)R16(sp));
+
         //error, jump to panic interrupt
         default:
             R16(ip) = (R16(stat) << 8) + pai;
