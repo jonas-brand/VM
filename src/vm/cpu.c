@@ -47,7 +47,13 @@ enum
 //interrupt vector table layout
 enum
 {
-    pai = 0
+    pai = 0,
+    gpi0 = pai + 2,
+    gpi1 = gpi0 + 2,
+    gpi2 = gpi1 + 2,
+    gpi3 = gpi2 + 2,
+    gpi4 = gpi3 + 2,
+    gpi5 = gpi4 + 2,
 };
 
 //memory for general perpose registers
