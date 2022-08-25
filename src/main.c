@@ -10,9 +10,16 @@
 
 static uint8_t prgm[PRGM_SIZE] =
 {
-    DT16(INSTR(l16, r16, vm_mov)), DT16(3), gpr0l,  //gpr01 = 3
-    DT16(INSTR(r16, none, vm_psh)), gpr0l,
-    DT16(INSTR(r16, none, vm_pop)), gpr1l,
+    DT16(INSTR(l16, r16, vm_mov)), DT16(0xFF), sp,
+    DT16(INSTR(l32, none, vm_psh)), DT32(5),
+    DT16(INSTR(l32, none, vm_psh)), DT32(6),
+    DT16(INSTR(none, none, vm_nop)),
+    DT16(INSTR(none, none, vm_nop)),
+    DT16(INSTR(none, none, vm_nop)),
+    DT16(INSTR(r16, none, vm_psh)), sp,
+    DT16(INSTR(r16, none, vm_pop)), gpr2l,
+    DT16(INSTR(l16, r16, vm_sub)), 2, gpr2l,
+    
 };
 
 int main(void)
@@ -27,7 +34,4 @@ int main(void)
         cpu_clk();
         cpu_print();
     }
-
-    printf("\n");
-    mem_print(0xFF00, 10);
 }
