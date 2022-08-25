@@ -44,9 +44,12 @@ typedef enum
     l8,
     l16,
     l32,
-    m8,
-    m16,
-    m32,
+    rm8,
+    rm16,
+    rm32,
+    lm8,
+    lm16,
+    lm32,
     r16,
     r32
 }arg_type_t;

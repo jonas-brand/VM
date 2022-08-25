@@ -43,7 +43,8 @@ static arg_type_t parse_arg2(instr_t instr)
 static size_t arg_size(arg_type_t arg_type)
 {
     if(arg_type == none) return 0;
-    if(arg_type == l8 || arg_type == r16 || arg_type == r32) return 1;
+    if(arg_type == l8 || arg_type == r16 || arg_type == r32 ||
+       arg_type == rm8 || arg_type == rm16 || arg_type == rm32) return 1;
     if(arg_type == l32) return 4;
     return 2;
 }
@@ -62,14 +63,24 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
             R16(arg2) = (uint8_t)arg1;
             break;
 
-        //move m8 into lower byte of r16
-        case INSTR(m8, r16, vm_mov):
+        //move lm8 into lower byte of r16
+        case INSTR(lm8, r16, vm_mov):
             R16(arg2) = mem_fech_8((dtptr_t)arg1);
             break;
+        
+        //move rm8 into lower byte of r16
+        case INSTR(rm8, r16, vm_mov):
+            R16(arg2) = mem_fech_8((dtptr_t)R16(arg1));
+            break;
 
-        //move lower byte of r16 into m8
-        case INSTR(r16, m8, vm_mov):
+        //move lower byte of r16 into lm8
+        case INSTR(r16, lm8, vm_mov):
             mem_write_8((dtptr_t)arg2, (uint8_t)R16(arg1));
+            break;
+
+        //move lower byte of r16 into rm8
+        case INSTR(r16, rm8, vm_mov):
+            mem_write_8((dtptr_t)R16(arg2), (uint8_t)R16(arg1));
             break;
 
         //move l16 into r16
@@ -77,14 +88,29 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
             R16(arg2) = (uint16_t)arg1;
             break;
 
-        //move m16 into r16
-        case INSTR(m16, r16, vm_mov):
+        //move lm16 into r16
+        case INSTR(lm16, r16, vm_mov):
             R16(arg2) = mem_fech_16((dtptr_t)arg1);
             break;
 
-        //move r16 into m16
-        case INSTR(r16, m16, vm_mov):
+        //move rm16 into r16
+        case INSTR(rm16, r16, vm_mov):
+            R16(arg2) = mem_fech_16((dtptr_t)R16(arg1));
+            break;
+
+        //move r16 into r16
+        case INSTR(r16, r16, vm_mov):
+            R16(arg2) = R16(arg1);
+            break;
+
+        //move r16 into lm16
+        case INSTR(r16, lm16, vm_mov):
             mem_write_16((dtptr_t)arg2, R16(arg1));
+            break;
+        
+        //move r16 into rm16
+        case INSTR(r16, rm16, vm_mov):
+            mem_write_16((dtptr_t)R16(arg2), R16(arg1));
             break;
 
         //move l32 into r32
@@ -92,14 +118,29 @@ void instr_exec(instr_t instr, uint32_t arg1, uint32_t arg2)
             R32(arg2) = (uint32_t)arg1;
             break;
 
-        //move m32 into r32
-        case INSTR(m32, r32, vm_mov):
+        //move lm32 into r32
+        case INSTR(lm32, r32, vm_mov):
             R32(arg2) = mem_fech_32((dtptr_t)arg1);
             break;
+        
+        //move rm32 into r32
+        case INSTR(rm32, r32, vm_mov):
+            R32(arg2) = mem_fech_32((dtptr_t)R16(arg1));
+            break;
+        
+        //move r32 into r32
+        case INSTR(r32, r32, vm_mov):
+            R32(arg2) = R32(arg1);
+            break;
 
-        //move r32 into m32
-        case INSTR(r32, m32, vm_mov):
+        //move r32 into lm32
+        case INSTR(r32, lm32, vm_mov):
             mem_write_32((dtptr_t)arg2, R32(arg1));
+            break;
+        
+        //move r32 into rm32
+        case INSTR(r32, rm32, vm_mov):
+            mem_write_32((dtptr_t)R16(arg2), R32(arg1));
             break;
 
         //push r16 onto the stack
