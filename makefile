@@ -2,7 +2,7 @@
 CC = gcc
 
 #flags
-CFLAGS = 
+CFLAGS = -DDEBUG
 
 #defult rule
 all: bin\\out.exe

@@ -11,23 +11,22 @@
 static uint8_t prgm[PRGM_SIZE] =
 {
     DT16(INSTR(l16, r16, vm_mov)), DT16(0xFF), sp,
+    DT16(INSTR(l16, r16, vm_mov)), DT16(37), gpr0l,
+    DT16(INSTR(r16, none, vm_psh)), gpr0l,
     DT16(INSTR(l32, r32, vm_mov)), DT32(5), gpr0,
     DT16(INSTR(r32, none, vm_psh)), gpr0,
     DT16(INSTR(l32, r32, vm_mov)), DT32(6), gpr0,
     DT16(INSTR(r32, none, vm_psh)), gpr0,
-    DT16(INSTR(l16, none, vm_cal)), DT16(PRGM_SIZE)
+    DT16(INSTR(l16, none, vm_jmp)), DT16(PRGM_SIZE)
 };
 
 static uint8_t subrtn_mul[PRGM_SIZE] =
 {
-    DT16(INSTR(r16, r16, vm_mov)), sp, gpr2l,
-    DT16(INSTR(l16, r16, vm_mov)), DT16(2), gpr2h,
-    DT16(INSTR(r16, r16, vm_sub)), gpr2h, gpr2l,
-    DT16(INSTR(rm32, r32, vm_mov)), gpr2l, gpr1,
-    DT16(INSTR(r16, r16, vm_sub)), gpr2h, gpr2l,
-    DT16(INSTR(rm32, r32, vm_mov)), gpr2l, gpr0,
+    DT16(INSTR(r32, none, vm_pop)), gpr0,
+    DT16(INSTR(r32, none, vm_pop)), gpr1,
     DT16(INSTR(r32, r32, vm_mul)), gpr1, gpr0,
-    DT16(INSTR(none, none, vm_rt))
+    DT16(INSTR(r16, none, vm_pop)), gpr1l,
+    DT16(INSTR(r16, none, vm_jmp)), gpr1l
 };
 
 int main(void)
