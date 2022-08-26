@@ -17,7 +17,8 @@ static uint8_t prgm[PRGM_SIZE] =
     DT16(INSTR(r32, none, vm_psh)), gpr0,
     DT16(INSTR(l32, r32, vm_mov)), DT32(6), gpr0,
     DT16(INSTR(r32, none, vm_psh)), gpr0,
-    DT16(INSTR(l16, none, vm_jmp)), DT16(PRGM_SIZE)
+    DT16(INSTR(l16, none, vm_jmp)), DT16(PRGM_SIZE),
+    DT16(INSTR(l16, none, vm_jmp)), DT16(37)
 };
 
 static uint8_t subrtn_mul[PRGM_SIZE] =
